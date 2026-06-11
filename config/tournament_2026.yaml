@@ -1,0 +1,47 @@
+# Formato del Mundial 2026 (dato, no código). Edita aquí cuando FIFA confirme
+# equipos, sedes y cruces definitivos. El simulador lee este archivo.
+#
+# Formato: 48 equipos, 12 grupos (A-L) de 4. Avanzan a dieciseisavos (Round of 32):
+#   los 2 primeros de cada grupo (24) + los 8 mejores terceros.
+# Eliminatorias: R32 → R16 → cuartos → semis → final.
+
+meta:
+  name: "FIFA World Cup 2026"
+  hosts: ["USA", "Mexico", "Canada"]
+  n_teams: 48
+  n_groups: 12
+
+advancement:
+  per_group_direct: 2          # primeros 2 de cada grupo
+  best_thirds: 8               # mejores terceros que clasifican
+  points: { win: 3, draw: 1, loss: 0 }
+  # Criterios de desempate en orden de aplicación
+  tiebreakers: [points, goal_difference, goals_for, head_to_head]
+
+# Puntos base de localía por equipo (los anfitriones juegan "en casa").
+# El simulador usa esto para marcar partidos como no-neutrales.
+host_teams: ["USA", "Mexico", "Canada"]
+
+# Grupos. Rellena los equipos cuando se confirme el sorteo.
+# Usa "TBD-<algo>" para plazas aún sin definir (repechajes, etc.).
+groups:
+  A: ["Mexico", "TBD-A2", "TBD-A3", "TBD-A4"]
+  B: ["Canada", "TBD-B2", "TBD-B3", "TBD-B4"]
+  C: ["TBD-C1", "TBD-C2", "TBD-C3", "TBD-C4"]
+  D: ["USA", "TBD-D2", "TBD-D3", "TBD-D4"]
+  E: ["TBD-E1", "TBD-E2", "TBD-E3", "TBD-E4"]
+  F: ["TBD-F1", "TBD-F2", "TBD-F3", "TBD-F4"]
+  G: ["TBD-G1", "TBD-G2", "TBD-G3", "TBD-G4"]
+  H: ["TBD-H1", "TBD-H2", "TBD-H3", "TBD-H4"]
+  I: ["TBD-I1", "TBD-I2", "TBD-I3", "TBD-I4"]
+  J: ["TBD-J1", "TBD-J2", "TBD-J3", "TBD-J4"]
+  K: ["TBD-K1", "TBD-K2", "TBD-K3", "TBD-K4"]
+  L: ["TBD-L1", "TBD-L2", "TBD-L3", "TBD-L4"]
+
+# Estructura del cuadro eliminatorio. Define cómo se emparejan los clasificados.
+# TODO: completar el bracket oficial cuando FIFA publique el cruce de R32.
+# Formato sugerido por enfrentamiento: [<posición1>, <posición2>]
+#   p.ej. "1A" = primero del grupo A; "3CDFI" = mejor tercero entre esos grupos.
+knockout:
+  round_of_32: []   # TODO: ej. [["1A", "3CDFI"], ["1C", "3DEFI"], ...]
+  # R16, cuartos, semis y final se derivan por progresión del bracket.

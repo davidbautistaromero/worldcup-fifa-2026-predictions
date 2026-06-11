@@ -1,0 +1,41 @@
+# Configuración global del proyecto. Cargada por src/worldcup/config.py
+seed: 42                      # semilla aleatoria → simulaciones reproducibles
+
+paths:
+  data_raw: data/raw
+  data_interim: data/interim
+  data_processed: data/processed
+  data_external: data/external
+  models: outputs/models
+  figures: outputs/figures
+  reports: outputs/reports
+
+data:
+  # Dataset principal: resultados internacionales históricos (Kaggle / RSSSF).
+  # Coloca el CSV en data/raw/ y ajusta el nombre aquí.
+  results_csv: results.csv          # columnas: date, home_team, away_team, home_score, away_score, tournament, neutral
+  fifa_ranking_csv: fifa_ranking.csv
+
+ratings:
+  elo:
+    k_factor: 40               # sensibilidad del Elo a cada partido
+    home_advantage: 65         # bonus de localía en puntos Elo
+    initial_rating: 1500
+    mov_multiplier: true       # ajustar por margen de victoria (margin of victory)
+
+models:
+  dixon_coles:
+    xi: 0.0018                  # tasa de decaimiento temporal (peso de partidos antiguos)
+    max_goals: 10              # truncamiento de la matriz de marcadores
+  xgboost:
+    n_estimators: 400
+    max_depth: 4
+    learning_rate: 0.05
+
+simulation:
+  n_simulations: 50000
+  knockout_extra_time: true    # modelar prórroga/penales en eliminatorias
+
+evaluation:
+  backtest_tournaments: [2014, 2018, 2022]   # Mundiales para validar (sin fuga temporal)
+  primary_metric: rps          # rps | log_loss | brier

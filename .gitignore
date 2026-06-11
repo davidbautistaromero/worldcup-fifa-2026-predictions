@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.env
+
+# Datos (no versionar descargas ni datos pesados; sí versionar data/external curado)
+data/raw/*
+data/interim/*
+data/processed/*
+!data/**/.gitkeep
+
+# Salidas generadas
+outputs/models/*
+outputs/figures/*
+outputs/reports/*
+!outputs/**/.gitkeep
+
+# Notebooks: checkpoints
+.ipynb_checkpoints/
+
+# Herramientas
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
