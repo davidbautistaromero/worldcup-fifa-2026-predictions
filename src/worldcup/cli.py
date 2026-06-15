@@ -8,6 +8,8 @@ Comandos:
 """
 from __future__ import annotations
 
+from pathlib import Path
+
 import typer
 
 from worldcup.config import load_config
@@ -17,8 +19,31 @@ app = typer.Typer(help="Modelo de predicción del Mundial FIFA 2026.")
 
 @app.command("download-data")
 def download_data() -> None:
-    """Descarga, limpia y genera features. TODO: cablear data.* ."""
-    typer.echo("TODO: ingest → clean → features → data/processed/")
+    """Descarga (Kaggle) + limpia el histórico de resultados → data/interim/.
+
+    El feature engineering (data/processed/) queda como paso posterior.
+    """
+    from worldcup.data.clean import clean_results
+    from worldcup.data.download import KaggleCredentialsError, download_dataset
+    from worldcup.data.ingest import load_results
+
+    cfg = load_config()
+    try:
+        typer.echo(f"Descargando '{cfg['data']['kaggle_dataset']}' desde Kaggle...")
+        download_dataset()
+    except KaggleCredentialsError as exc:
+        typer.secho(str(exc), fg=typer.colors.RED)
+        raise typer.Exit(code=1)
+
+    typer.echo("Cargando y limpiando resultados...")
+    df = clean_results(load_results())
+
+    interim = Path(cfg["paths"]["data_interim"]) / "results_clean.parquet"
+    interim.parent.mkdir(parents=True, exist_ok=True)
+    df.to_parquet(interim, index=False)
+    typer.secho(
+        f"OK: {len(df):,} partidos limpios -> {interim}", fg=typer.colors.GREEN
+    )
 
 
 @app.command()

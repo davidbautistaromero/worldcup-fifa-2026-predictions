@@ -11,9 +11,10 @@ paths:
   reports: outputs/reports
 
 data:
-  # Dataset principal: resultados internacionales históricos (Kaggle / RSSSF).
-  # Coloca el CSV en data/raw/ y ajusta el nombre aquí.
-  results_csv: results.csv          # columnas: date, home_team, away_team, home_score, away_score, tournament, neutral
+  # Dataset principal: resultados internacionales históricos (Kaggle).
+  # Se descarga con `worldcup download-data` vía la API de Kaggle.
+  kaggle_dataset: "martj42/international-football-results-from-1872-to-2017"
+  results_csv: results.csv          # columnas: date, home_team, away_team, home_score, away_score, tournament, city, country, neutral
   fifa_ranking_csv: fifa_ranking.csv
 
 ratings:

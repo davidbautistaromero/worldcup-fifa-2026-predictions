@@ -1,0 +1,29 @@
+# Dependencias del proyecto. Para desarrollo se recomienda `pip install -e ".[dev,dashboard]"`,
+# que usa pyproject.toml. Este archivo replica esas dependencias para entornos
+# que prefieran requirements.txt.
+
+# --- Núcleo (runtime) ---
+pandas>=2.2
+numpy>=1.26
+scipy>=1.13
+kaggle>=1.6          # descarga del dataset
+python-dotenv>=1.0   # carga credenciales desde .env
+pyarrow>=15.0        # guardar/leer parquet (data/interim, data/processed)
+statsmodels>=0.14
+scikit-learn>=1.5
+xgboost>=2.1
+pyyaml>=6.0
+pydantic>=2.7
+typer>=0.12
+joblib>=1.4
+matplotlib>=3.9
+plotly>=5.22
+
+# --- Dashboard (local, Streamlit) ---
+streamlit>=1.36
+
+# --- Desarrollo ---
+pytest>=8.2
+pytest-cov>=5.0
+ruff>=0.5
+ipykernel>=6.29

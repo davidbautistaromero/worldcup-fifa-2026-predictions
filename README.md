@@ -22,10 +22,24 @@ python -m venv .venv
 pip install -e ".[dev,dashboard]"
 ```
 
+## Datos (Kaggle)
+
+`worldcup download-data` descarga el dataset
+[International football results from 1872 to 2024](https://www.kaggle.com/datasets/martj42/international-football-results-from-1872-to-2017)
+vía la API de Kaggle. Necesitas un token **una sola vez**:
+
+1. Crea una cuenta en [kaggle.com](https://www.kaggle.com) si no la tienes.
+2. Ve a **Account → API → "Create New API Token"**. Descarga `kaggle.json`.
+3. Colócalo en `C:\Users\<usuario>\.kaggle\kaggle.json`
+   (o exporta las variables `KAGGLE_USERNAME` y `KAGGLE_KEY`).
+
+> El dataset es de uso público (licencia CC0). No se versiona en git (`data/raw/`
+> está en `.gitignore`).
+
 ## Uso
 
 ```bash
-worldcup download-data    # descarga + limpia + features  → data/processed/
+worldcup download-data    # descarga (Kaggle) + limpia  → data/interim/results_clean.parquet
 worldcup train            # ajusta Elo + Dixon-Coles + XGBoost → outputs/models/
 worldcup evaluate         # backtesting 2014/2018/2022 → métricas
 worldcup simulate         # N simulaciones del Mundial 2026 → outputs/reports/
