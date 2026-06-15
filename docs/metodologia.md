@@ -99,7 +99,7 @@ $$
 El término común `W_3` induce covarianza positiva:
 
 $$
-\operatorname{Cov}(X, Y) = \lambda_3 \ge 0
+\mathrm{Cov}(X, Y) = \lambda_3 \ge 0
 $$
 
 La función de masa conjunta es:
