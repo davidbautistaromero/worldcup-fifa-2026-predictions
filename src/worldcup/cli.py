@@ -29,8 +29,10 @@ def download_data() -> None:
 
     cfg = load_config()
     try:
-        typer.echo(f"Descargando '{cfg['data']['kaggle_dataset']}' desde Kaggle...")
+        typer.echo(f"Descargando resultados '{cfg['data']['kaggle_dataset']}'...")
         download_dataset()
+        typer.echo(f"Descargando ranking FIFA '{cfg['data']['kaggle_ranking_dataset']}'...")
+        download_dataset(cfg["data"]["kaggle_ranking_dataset"])
     except KaggleCredentialsError as exc:
         typer.secho(str(exc), fg=typer.colors.RED)
         raise typer.Exit(code=1)

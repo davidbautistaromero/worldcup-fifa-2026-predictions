@@ -31,9 +31,21 @@ def load_results(path: str | Path | None = None) -> pd.DataFrame:
 
 
 def load_fifa_ranking(path: str | Path | None = None) -> pd.DataFrame:
-    """Carga el ranking FIFA histórico (opcional, como feature alternativa)."""
+    """Carga el ranking FIFA histórico (opcional, como feature alternativa).
+
+    El dataset trae varios snapshots (fifa_ranking-AAAA-MM-DD.csv); por defecto
+    se toma el más reciente (orden lexicográfico de la fecha en el nombre).
+    """
     cfg = load_config()
-    csv = Path(path) if path else Path(cfg["paths"]["data_raw"]) / cfg["data"]["fifa_ranking_csv"]
-    if not csv.exists():
-        raise FileNotFoundError(f"No se encontró {csv}.")
+    if path:
+        csv = Path(path)
+    else:
+        raw = Path(cfg["paths"]["data_raw"])
+        matches = sorted(raw.glob(cfg["data"]["fifa_ranking_glob"]))
+        if not matches:
+            raise FileNotFoundError(
+                f"No se encontró ningún '{cfg['data']['fifa_ranking_glob']}' en {raw}. "
+                "Corre `worldcup download-data` primero."
+            )
+        csv = matches[-1]  # snapshot más reciente
     return pd.read_csv(csv, parse_dates=["rank_date"])
